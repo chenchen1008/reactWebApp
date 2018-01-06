@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import HomeScreen from './page/HomeScreen';
 import AreaScreen from './page/AreaScreen';
+import FlexScreen from './page/FlexScreen';
 
 const App = () => (
     <Router>
@@ -13,7 +14,7 @@ const App = () => (
 
             <Route exact path="/" component={HomeScreen}/>
             <Route path="/area" component={AreaScreen}/>
-            <Route path="/about" component={About}/>
+            <Route path="/flex" component={FlexScreen}/>
             <Route path="/topics" component={Topics}/>
         </div>
     </Router>
