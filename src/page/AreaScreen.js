@@ -3,14 +3,14 @@
  */
 import React, {Component} from 'react';
 import WheelDialog from '../widget/wheel/WheelDialog';
-import AeraData from '../widget/wheel/data';
+import AeraData from '../widget/wheel/AreaData';
 
 class AreaScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: AeraData,
-            address:'',
+            data: [],
+            address: '',
         }
     }
 
@@ -19,9 +19,13 @@ class AreaScreen extends Component {
      */
     onAddressSelect(pIndex, cIndex, aIndex) {
         var data = AeraData;
-        var address = data[pIndex].name
-            + data[pIndex].city[cIndex].name
-            + data[pIndex].city[cIndex].area[aIndex];
+        var province = data[pIndex].name;
+        var city = data[pIndex].child[cIndex].name;
+        var country ='';
+        if(data[pIndex].child[cIndex].child){
+            country = data[pIndex].child[cIndex].child[aIndex].name;
+        }
+        var address = province + city + country;
         console.log(" address:  --->" + address)
         this.state.address = address;
         //与渲染无关的数据  直接存在this对象里  如果存在State里面会导致页面脏渲染，卡顿
@@ -35,10 +39,10 @@ class AreaScreen extends Component {
     componentDidMount() {
         this.setState({data: AeraData});
         /* var self = this;
-        $.get("http://ac-wiuh7w1y.clouddn.com/c4acc5d3bec3fb3216fa.json",
-        function (data) {
-        self.setState({data: data});
-        });*/
+         $.get("http://ac-wiuh7w1y.clouddn.com/c4acc5d3bec3fb3216fa.json",
+         function (data) {
+         self.setState({data: data});
+         });*/
     }
 
     render() {

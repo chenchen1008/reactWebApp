@@ -26,24 +26,26 @@ class WheelDialog extends Component {
         this.initData(nextProps.data);
     }
 
-/*
-    componentWillMount() {
-        this.initData(this.props.data);
-    }
-*/
+    /*
+     componentWillMount() {
+     this.initData(this.props.data);
+     }
+     */
 
     initData(data) {
         var pArr = [];
         var cArr = [];
         var aArr = [];
-        data.map(function (pro) {
-            pArr.push(pro.name);
+        data.map(function (item) {
+            pArr.push(item.name);
         });
         if (data[0])
-            data[0].city.map(function (city) {
-                cArr.push(city.name)
+            data[0].child.map(function (item) {
+                cArr.push(item.name)
             });
-        aArr = data[0].city[0].area;
+        if (data[0].child[0].child) {
+            aArr = data[0].child[0].child[0].name;
+        }
         this.setState({
             pro: pArr,
             city: cArr,
@@ -58,10 +60,14 @@ class WheelDialog extends Component {
         var aArr = [];
         switch (type) {
             case  "pro"://省带动市区变化
-                this.state.data[index].city.map(function (city) {
-                    cArr.push(city.name)
+                this.state.data[index].child.map(function (item) {
+                    cArr.push(item.name)
                 });
-                aArr = this.state.data[index].city[0].area;
+                if (this.state.data[index].child[0].child) {
+                    this.state.data[index].child[0].child.map(function (item) {
+                        aArr.push(item.name)
+                    });
+                }
                 this.setState({
                     city: cArr,
                     area: aArr,
@@ -71,7 +77,11 @@ class WheelDialog extends Component {
                 });
                 break;
             case  "city"://市带动区变化
-                aArr = this.state.data[this.state.pIndex].city[index].area;
+                if (this.state.data[this.state.pIndex].child[index].child) {
+                    this.state.data[this.state.pIndex].child[index].child.map(function (item) {
+                        aArr.push(item.name)
+                    });
+                }
                 this.setState({
                     area: aArr,
                     cIndex: index,

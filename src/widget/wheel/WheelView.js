@@ -102,20 +102,33 @@ class WheelView extends Component {
     }
 
     render() {
-        return (<div className="container"
-                     ref="scroller"
-                     onScroll={this.onScroll}
-                     onClick={this.handleClick}>
-                <div className="scroller">
-                    {
-                        this.state.data.map(function (item) {
-                            //循环把数据显示出来
-                            return <div className="item">{item}</div>
-                        })
-                    }
+        if(this.state.data && this.state.data.length > 0){
+            return (<div className="container"
+                         ref="scroller"
+                         onScroll={this.onScroll}
+                         onClick={this.handleClick}>
+                    <div className="scroller">
+                        {
+                            this.state.data.map(function (item) {
+                                //循环把数据显示出来
+                                return <div className="item">{item}</div>
+                            })
+                        }
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }else{
+            return (<div className="container"
+                         ref="scroller"
+                         onScroll={this.onScroll}
+                         onClick={this.handleClick}>
+                    <div className="scroller">
+                        <div className="item"></div>
+                        <div className="item"></div>
+                    </div>
+                </div>
+            );
+        }
     }
 };
 
