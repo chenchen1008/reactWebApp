@@ -123,8 +123,6 @@ class WheelView extends Component {
                          onScroll={this.onScroll}
                          onClick={this.handleClick}>
                     <div className="scroller">
-                        <div className="item"></div>
-                        <div className="item"></div>
                     </div>
                 </div>
             );
