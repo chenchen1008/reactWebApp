@@ -7,6 +7,7 @@ import {
 import HomeScreen from './page/HomeScreen';
 import AreaScreen from './page/AreaScreen';
 import FlexScreen from './page/FlexScreen';
+import ModalScreen from './page/ModalScreen';
 
 const App = () => (
     <Router>
@@ -15,7 +16,7 @@ const App = () => (
             <Route exact path="/" component={HomeScreen}/>
             <Route path="/area" component={AreaScreen}/>
             <Route path="/flex" component={FlexScreen}/>
-            <Route path="/topics" component={Topics}/>
+            <Route path="/modal" component={ModalScreen}/>
         </div>
     </Router>
 )
