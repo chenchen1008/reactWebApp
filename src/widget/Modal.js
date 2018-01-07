@@ -89,11 +89,13 @@ export default class Modal extends Component {
             this.node = document.createElement("div");
         }
 
-        if (this.props.visiable) {
+        var {visiable , parent,...other} = this.props;
+
+        if (visiable) {
             return createPortal(
                 <div
                     ref={this.portalRef}
-                    {...this.props}
+                    {...other}
                 />,
                 this.node
             );
