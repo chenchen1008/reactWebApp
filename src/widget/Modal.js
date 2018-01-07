@@ -10,23 +10,23 @@ const createPortal = isReact16
     ? ReactDOM.createPortal
     : ReactDOM.unstable_renderSubtreeIntoContainer;
 
-function getParentElement(parentSelector) {
-    return parentSelector();
+function getParentElement(parent) {
+    return parent();
 }
 
 export default class Modal extends Component {
 
     /* eslint-disable react/no-unused-prop-types */
     static propTypes = {
-        isOpen: PropTypes.bool.isRequired,
+        visiable: PropTypes.bool.isRequired,
         style: PropTypes.object,
-        parentSelector: PropTypes.func,
+        parent: PropTypes.func,
     };
     /* eslint-enable react/no-unused-prop-types */
 
     static defaultProps = {
-        isOpen: false,
-        parentSelector() {
+        visiable: false,
+        parent() {
             return document.body;
         }
     };
@@ -35,18 +35,18 @@ export default class Modal extends Component {
         if (!isReact16) {
             this.node = document.createElement("div");
         }
-        const parent = getParentElement(this.props.parentSelector);
+        const parent = getParentElement(this.props.parent);
         parent.appendChild(this.node);
         !isReact16 && this.renderPortal(this.props);
     }
 
     componentWillReceiveProps(newProps) {
-        const {isOpen} = newProps;
+        const {visiable} = newProps;
         // Stop unnecessary renders if modal is remaining closed
-        if (!this.props.isOpen && !isOpen) return;
+        if (!this.props.visiable && !visiable) return;
 
-        const currentParent = getParentElement(this.props.parentSelector);
-        const newParent = getParentElement(newProps.parentSelector);
+        const currentParent = getParentElement(this.props.parent);
+        const newParent = getParentElement(newProps.parent);
 
         if (newParent !== currentParent) {
             currentParent.removeChild(this.node);
@@ -65,7 +65,7 @@ export default class Modal extends Component {
 
     removePortal = () => {
         !isReact16 && ReactDOM.unmountComponentAtNode(this.node);
-        const parent = getParentElement(this.props.parentSelector);
+        const parent = getParentElement(this.props.parent);
         parent.removeChild(this.node);
     };
 
@@ -74,7 +74,7 @@ export default class Modal extends Component {
     };
 
     renderPortal = props => {
-        if (props.isOpen) {
+        if (props.visiable) {
             const portal = createPortal(
                 this,
                 <div  {...props} />,
@@ -89,7 +89,7 @@ export default class Modal extends Component {
             this.node = document.createElement("div");
         }
 
-        if (this.props.isOpen) {
+        if (this.props.visiable) {
             return createPortal(
                 <div
                     ref={this.portalRef}
