@@ -26,6 +26,11 @@ export default class Modal extends Component {
 
     static defaultProps = {
         visiable: false,
+        style: {
+            position: 'fixed',
+            left: 0,
+            top: 0,
+        },
         parent() {
             return document.body;
         }
@@ -89,13 +94,16 @@ export default class Modal extends Component {
             this.node = document.createElement("div");
         }
 
-        var {visiable , parent,...other} = this.props;
+        let {visiable, parent, style, ...other} = this.props;
+
+        let containerStyle = Object.assign({}, styles.container, style);
 
         if (visiable) {
             return createPortal(
                 <div
                     ref={this.portalRef}
                     {...other}
+                    style={containerStyle}
                 />,
                 this.node
             );
@@ -105,3 +113,12 @@ export default class Modal extends Component {
 
     }
 }
+
+
+const styles = {
+    container: {
+        position: 'fixed',
+        left: '0',
+        top: '0',
+    }
+};
